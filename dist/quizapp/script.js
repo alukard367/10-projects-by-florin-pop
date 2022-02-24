@@ -50,6 +50,8 @@ const d_text = document.getElementById("d_text")
 const submitBtn = document.getElementById("submit")
 
 let currentQuiz = 0
+let score = 0
+let answer = undefined
 
 loadQuiz()
 
@@ -65,21 +67,26 @@ function loadQuiz() {
 }
 
 function getSelected() {
-    const answers = document.querySelectorAll(".asnwer")
+    const answerEls = document.querySelectorAll(".answer")
 
-    answers.forEach(answer => {
-        console.log(answer.value)
+    answerEls.forEach(answerEl => {
+        if(answerEl.checked) {
+            return answerEl.id
+        }
     })
+
+    return answer
 }
 
 submitBtn.addEventListener('click', () => {
-    currentQuiz ++
-
-    if(currentQuiz < quizData.length) {
-
-        loadQuiz()
-    } else {
-        alert("You finished, YEY!...")
+    const answer = getSelected()
+        
+    if (answer) {
+        currentQuiz ++
+        if(currentQuiz < quizData.length) {
+            loadQuiz()
+        } else {
+            alert("you've finished yey!")
+        }
     }
-
 })
